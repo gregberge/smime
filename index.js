@@ -14,6 +14,7 @@ exports.sign = sign;
  * @param {stream.Readable} content Content stream
  * @param {string} key Key path
  * @param {string} cert Cert path
+ * @param {function} [cb] Optional callback
  * @returns {object} result Result
  * @returns {string} result.pem Pem signature
  * @returns {string} result.der Der signature
