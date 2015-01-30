@@ -1,6 +1,6 @@
 {
   "name": "smime",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Node / io.js wrapper for OpenSSL S/MIME command.",
   "main": "index.js",
   "scripts": {
