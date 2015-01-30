@@ -73,5 +73,5 @@ function parseDer(pem) {
   if (!content)
     throw new Error('Can\'t extract der content');
 
-  return content[1].replace(/\n/g, '');
+  return content[1];
 }
