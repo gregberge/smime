@@ -1,8 +1,6 @@
 var util = require('util');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var Promise = require('promise');
-
-var PKCS7_CONTENT_REGEX = /Content-Disposition:[^\n]+\s*?([A-Za-z0-9+=/\r\n]+)\s*?-----/;
 
 // Expose methods.
 exports.sign = sign;
@@ -46,21 +44,23 @@ function sign(options, cb) {
     if (options.password)
       command += util.format(' -passin pass:%s', options.password);
 
-    var child = exec(command, function (err, stdout, stderr) {
-      if (err) return reject(err);
-
-      resolve({
-        child: child,
-        stdout: stdout,
-        stderr: stderr,
-        der: Buffer.concat(der)
-      });
-    });
+    var args = command.split(' ');
+    var child = spawn(args[0], args.splice(1));
 
     var der = [];
 
     child.stdout.on('data', function (chunk) {
       der.push(chunk);
+    });
+
+    child.on('close', function (code) {
+      if (code !== 0)
+        reject(new Error('Process failed.'));
+      else
+        resolve({
+          child: child,
+          der: Buffer.concat(der)
+        });
     });
 
     options.content.pipe(child.stdin);

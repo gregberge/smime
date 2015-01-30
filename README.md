@@ -21,7 +21,7 @@ smime.sign({
   key: '/path/to/key.pem',
   cert: '/path/to/cert.pem'
 }).then(function (res) {
-  console.log(res); // {pem, der, stdout, stderr, child}
+  console.log(res); // {der, child}
 });
 ```
 
@@ -45,8 +45,6 @@ Sign a content using smime.
 ```
 @returns {object} result Result
 @returns {Buffer} result.der Der signature
-@returns {string} result.stdout Strict stdout
-@returns {string} result.stderr Strict stderr
 @returns {ChildProcess} result.child Child process
 ```
 

@@ -43,8 +43,6 @@ describe('Smime', function () {
       })
       .then(function (res) {
         expect(res).to.have.property('der');
-        expect(res).to.have.property('stdout');
-        expect(res).to.have.property('stderr', '');
         expect(res).to.have.property('child');
       });
     });
@@ -58,8 +56,6 @@ describe('Smime', function () {
       })
       .then(function (res) {
         expect(res).to.have.property('der');
-        expect(res).to.have.property('stdout');
-        expect(res).to.have.property('stderr', '');
         expect(res).to.have.property('child');
       });
     });
