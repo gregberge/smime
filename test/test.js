@@ -49,5 +49,21 @@ describe('Smime', function () {
         expect(res).to.have.property('child');
       });
     });
+
+    it('should work with password', function () {
+      return smime.sign({
+        content: fs.createReadStream(path.join(__dirname, 'file-to-sign')),
+        key: path.join(__dirname, 'key.pem'),
+        cert: path.join(__dirname, 'certificate.pem'),
+        password: 'x'
+      })
+      .then(function (res) {
+        expect(res).to.have.property('pem');
+        expect(res).to.have.property('der');
+        expect(res).to.have.property('stdout');
+        expect(res).to.have.property('stderr', '');
+        expect(res).to.have.property('child');
+      });
+    });
   });
 });

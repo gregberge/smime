@@ -11,9 +11,10 @@ exports.sign = sign;
  * Sign a file.
  *
  * @param {object} options Options
- * @param {stream.Readable} content Content stream
- * @param {string} key Key path
- * @param {string} cert Cert path
+ * @param {stream.Readable} options.content Content stream
+ * @param {string} options.key Key path
+ * @param {string} options.cert Cert path
+ * @param {string} [options.password] Key password
  * @param {function} [cb] Optional callback
  * @returns {object} result Result
  * @returns {string} result.pem Pem signature
@@ -41,6 +42,9 @@ function sign(options, cb) {
       options.cert,
       options.key
     );
+
+    if (options.password)
+      command += util.format(' -passin pass:%s', options.password);
 
     var child = exec(command, function (err, stdout, stderr) {
       if (err) return reject(err);
