@@ -44,8 +44,7 @@ Sign a content using smime.
 
 ```
 @returns {object} result Result
-@returns {string} result.pem Pem signature
-@returns {string} result.der Der signature
+@returns {Buffer} result.der Der signature
 @returns {string} result.stdout Strict stdout
 @returns {string} result.stderr Strict stderr
 @returns {ChildProcess} result.child Child process

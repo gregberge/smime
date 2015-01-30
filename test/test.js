@@ -42,7 +42,6 @@ describe('Smime', function () {
         cert: path.join(__dirname, 'certificate.pem')
       })
       .then(function (res) {
-        expect(res).to.have.property('pem');
         expect(res).to.have.property('der');
         expect(res).to.have.property('stdout');
         expect(res).to.have.property('stderr', '');
@@ -58,7 +57,6 @@ describe('Smime', function () {
         password: 'x'
       })
       .then(function (res) {
-        expect(res).to.have.property('pem');
         expect(res).to.have.property('der');
         expect(res).to.have.property('stdout');
         expect(res).to.have.property('stderr', '');

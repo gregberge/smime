@@ -38,7 +38,7 @@ function sign(options, cb) {
       throw new Error('Invalid certificate.');
 
     var command = util.format(
-      'openssl smime -sign -text -signer %s -inkey %s',
+      'openssl smime -sign -text -signer %s -inkey %s -outform DER -binary',
       options.cert,
       options.key
     );
@@ -53,25 +53,17 @@ function sign(options, cb) {
         child: child,
         stdout: stdout,
         stderr: stderr,
-        pem: stdout,
-        der: parseDer(stdout)
+        der: Buffer.concat(der)
       });
+    });
+
+    var der = [];
+
+    child.stdout.on('data', function (chunk) {
+      der.push(chunk);
     });
 
     options.content.pipe(child.stdin);
   })
   .nodeify(cb);
-}
-
-/**
- * Parse DER from PEM.
- */
-
-function parseDer(pem) {
-  var content = PKCS7_CONTENT_REGEX.exec(pem);
-
-  if (!content)
-    throw new Error('Can\'t extract der content');
-
-  return content[1];
 }
