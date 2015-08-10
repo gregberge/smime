@@ -41,7 +41,14 @@ function sign(options, cb) {
     if (options.password)
       command += util.format(' -passin pass:%s', options.password);
 
+    if (options.intermediateCert)
+      command += util.format(' -certfile %s', options.intermediateCert);
+
     var args = command.split(' ');
+
+    if (options.additionalFlags)
+      args = args.concat(options.additionalFlags);
+    
     var child = spawn(args[0], args.splice(1));
 
     var der = [];
