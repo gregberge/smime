@@ -1,6 +1,5 @@
 var util = require('util');
 var spawn = require('child_process').spawn;
-var Promise = require('promise');
 
 // Expose methods.
 exports.sign = sign;
@@ -13,13 +12,12 @@ exports.sign = sign;
  * @param {string} options.key Key path
  * @param {string} options.cert Cert path
  * @param {string} [options.password] Key password
- * @param {function} [cb] Optional callback
  * @returns {object} result Result
  * @returns {string} result.der Der signature
  * @returns {ChildProcess} result.child Child process
  */
 
-function sign(options, cb) {
+function sign(options) {
   return new Promise(function (resolve, reject) {
     options = options || {};
 
@@ -61,6 +59,5 @@ function sign(options, cb) {
     });
 
     options.content.pipe(child.stdin);
-  })
-  .nodeify(cb);
+  });
 }
